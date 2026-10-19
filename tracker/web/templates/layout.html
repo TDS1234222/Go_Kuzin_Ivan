@@ -1,0 +1,33 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            margin: 20px; 
+            background: #fafafa; 
+        }
+        .nav { margin-bottom: 15px; }
+        .nav a { margin-right: 10px; text-decoration: none; color: blue; }
+    </style>
+</head>
+<body>
+
+    <div class="nav">
+        <a href="/">Главная</a>
+        <a href="/about">О проекте</a>
+        <a href="/ping">Ping</a>
+    </div>
+
+    <hr>
+
+    <div>
+        {{template "content" .}}
+    </div>
+
+</body>
+</html>
+{{end}}
