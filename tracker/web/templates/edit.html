@@ -1,0 +1,27 @@
+{{define "content"}}
+<h3>Редактировать расход:</h3>
+
+<form method="POST" action="/update">
+    <input type="hidden" name="id" value="{{.Expense.ID}}">
+    
+    <label>Сумма:</label><br>
+    <input type="number" step="0.01" name="amount" value="{{printf "%.2f" .Expense.Amount}}" required><br><br>
+    
+    <label>Описание:</label><br>
+    <input type="text" name="description" value="{{.Expense.Description}}" required><br><br>
+    
+    <label>Категория:</label><br>
+    <select name="category_id" required>
+        {{$currentCat := .Expense.CategoryID}}
+        {{range .Categories}}
+        <option value="{{.ID}}" {{if eq .ID $currentCat}}selected{{end}}>{{.Name}}</option>
+        {{end}}
+    </select><br><br>
+    
+    <label>Дата:</label><br>
+    <input type="date" name="date" value="{{.Expense.Date.Format "2006-01-02"}}" required><br><br>
+    
+    <input type="submit" value="Сохранить изменения">
+    <a href="/" style="margin-left: 10px;">Отмена</a>
+</form>
+{{end}}

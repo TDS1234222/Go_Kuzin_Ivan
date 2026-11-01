@@ -1,0 +1,21 @@
+{{define "content"}}
+<div style="display: flex; gap: 50px;">
+    <div>
+        <h3>Войти в аккаунт</h3>
+        <form method="POST" action="/login">
+            <input type="email" name="email" placeholder="Email" required><br><br>
+            <input type="password" name="password" placeholder="Пароль" required><br><br>
+            <input type="submit" value="Войти">
+        </form>
+    </div>
+    
+    <div style="border-left: 1px solid #ccc; padding-left: 5px;">
+        <h3>Регистрация</h3>
+        <form method="POST" action="/register">
+            <input type="email" name="email" placeholder="Email" required><br><br>
+            <input type="password" name="password" placeholder="Пароль" required><br><br>
+            <input type="submit" value="Создать аккаунт">
+        </form>
+    </div>
+</div>
+{{end}}

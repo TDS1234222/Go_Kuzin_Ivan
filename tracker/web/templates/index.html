@@ -1,0 +1,69 @@
+{{define "content"}}
+<h3>Новый расход:</h3>
+
+<form method="POST" action="/add">
+    <input type="number" step="0.01" name="amount" placeholder="Сумма" required>
+    <input type="text" name="description" placeholder="Описание" required>
+    
+    <select name="category_id" required>
+        <option value="">Выберите категорию</option>
+        {{range .Categories}}
+        <option value="{{.ID}}">{{.Name}}</option>
+        {{end}}
+    </select>
+    
+    <input type="date" name="date" required>
+    <input type="submit" value="Добавить">
+</form>
+
+<br>
+<hr>
+
+<h3>Фильтры:</h3>
+<form method="GET" action="/">
+    <label>Категория:</label>
+    <select name="category_id">
+        <option value="">Все категории</option>
+        {{$currentCat := .CurrentCategoryID}}
+        {{range .Categories}}
+        <option value="{{.ID}}" {{if eq .ID $currentCat}}selected{{end}}>{{.Name}}</option>
+        {{end}}
+    </select>
+
+    <label style="margin-left: 15px;">От:</label>
+    <input type="date" name="date_from" value="{{.CurrentDateFrom}}">
+
+    <label style="margin-left: 15px;">До:</label>
+    <input type="date" name="date_to" value="{{.CurrentDateTo}}">
+
+    <input type="submit" value="Применить" style="margin-left: 15px;">
+    <a href="/" style="margin-left: 10px; text-decoration: none; color: gray;">Сбросить</a>
+</form>
+
+<h3>История расходов</h3>
+<table border="1" cellpadding="5" style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+    <tr style="background: #e0e0e0;">
+        <th>Что купили</th>
+        <th>Категория</th>
+        <th>Сколько (руб)</th>
+        <th>Когда</th>
+        <th>Действия</th>
+    </tr>
+    {{range .Expenses}}
+    <tr>
+        <td>{{.Description}}</td>
+        <td><i>{{.CategoryName}}</i></td>
+        <td><b>{{printf "%.2f" .Amount}}</b></td>
+        <td>{{.Date.Format "2006-01-02"}}</td>
+        <td>
+            <a href="/edit?id={{.ID}}">Изменить</a>
+            |
+            <form method="POST" action="/delete" style="display:inline;">
+                <input type="hidden" name="id" value="{{.ID}}">
+                <input type="submit" value="Удалить" style="background:none; border:none; color:red; cursor:pointer; padding:0; text-decoration:underline; font-family:inherit; font-size:inherit;">
+            </form>
+        </td>
+    </tr>
+    {{end}}
+</table>
+{{end}}
